@@ -81,7 +81,7 @@
                     <div class="tile is-ancestor">
                         <div class="tile is-parent">
                             <article class="tile is-child box">
-                                <p class="title">Les statuts</p>
+                                <p class="title">Les brigades</p>
                                 <p class="subtitle">Les catégories possibles</p>
                                 <b-table :data="brigades">
                                     <template slot-scope="props">
@@ -133,6 +133,8 @@
 </template>
 
 <script>
+import { brigades } from '@/services/Api'
+
 export default {
 	metaInfo: {
 		title: 'A propos',
@@ -161,7 +163,7 @@ export default {
                     description: 'Signalement annulé par l’opérateur'
                 }
             ],
-            brigades: ['75015-A', '75015-B', '75002', '75001', '75006-C']
+            brigades: brigades
 		}
 	},
 }

@@ -113,6 +113,7 @@
 
 <script>
 import moment from 'moment'
+import { brigades } from '@/services/Api'
 import Edit from '@/components/Edit.vue'
 
 export default {
@@ -127,7 +128,7 @@ export default {
 		return {
 			etats: ['Très faible', 'Faible', 'Moyen', 'Bon'],
 			statuts: ['Assigné', 'Sauvé', 'Echec'],
-			brigades: ['75015-A', '75015-B', '75002', '75001', '75006-C'],
+			brigades: brigades,
 			checkedRows: []
 		}
 	},

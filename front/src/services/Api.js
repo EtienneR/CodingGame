@@ -2,6 +2,7 @@ import axios from 'axios'
 const API_URL = 'http://localhost:1234/api/v1'
 export const brigades = ['75015-A', '75015-B', '75002', '75001', '75006-C']
 export const etats = ['Très faible', 'Faible', 'Moyen', 'Bon']
+export const animaux = ['Chien', 'Chat', 'Lapin', 'Perroquet']
 
 export default {
     addSignalement(content) {

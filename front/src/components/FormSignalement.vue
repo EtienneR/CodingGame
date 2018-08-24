@@ -113,6 +113,7 @@
 
 <script>
 import api from '@/services/Api'
+import { animaux } from '@/services/Api'
 import { etats } from '@/services/Api'
 import axios from 'axios'
 import { EventBus } from '@/event-bus.js'
@@ -133,8 +134,8 @@ export default {
 	},
 	data () {
 		return {
-			animaux: ['Chien', 'Chat', 'Lapin', 'Perroquet'],
-			etats: etats
+			animaux,
+			etats
         }
 	},
     methods: {

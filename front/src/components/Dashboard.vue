@@ -123,7 +123,7 @@ export default {
 	data () {
 		return {
 			statuts: ['Assigné', 'Sauvé', 'Echec'],
-			brigades: brigades,
+			brigades,
 			checkedRows: []
 		}
 	},

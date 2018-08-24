@@ -32,11 +32,8 @@
                             <article class="tile is-child box">
                                 <p class="title">Les animaux</p>
                                 <p class="subtitle">Les catégories possibles</p>
-                                <ul>
-                                    <li>Chat</li>
-                                    <li>Chien</li>
-                                    <li>Perroquet</li>
-                                    <li>Lapin</li>
+                                <ul v-for="(animal, index) in animaux" :key="index">
+                                    <li>{{ animal }}</li>
                                 </ul>
                             </article>
                         </div>
@@ -130,6 +127,7 @@
 </template>
 
 <script>
+import { animaux } from '@/services/Api'
 import { etats } from '@/services/Api'
 import { brigades } from '@/services/Api'
 
@@ -139,7 +137,8 @@ export default {
 	},
 	data () {
 		return {
-            etats: etats,
+            animaux,
+            etats,
 			statuts: [
                 { 
                     name: 'Signalé',
@@ -162,7 +161,7 @@ export default {
                     description: 'Signalement annulé par l’opérateur'
                 }
             ],
-            brigades: brigades
+            brigades
 		}
 	},
 }

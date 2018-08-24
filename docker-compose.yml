@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+
+version: '3'
+services:
+  mongo:
+    image: mongo:4.0.0-xenial
+    env_file:
+      - "./.dev.env"
+    ports:
+      - "27017:27017"
+    restart: always
+  api:
+    build: ./api
+    command: sh -c 'node_modules/.bin/nodemon'
+    volumes:
+      - ./api:/usr/src/app
+    ports:
+      - "1234:1234"
+    depends_on:
+      - mongo
+    env_file:
+      - "./.dev.env"
+    restart: always
+
+  front:
+    build: './front'
+    command: sh -c 'npm run serve'
+    volumes:
+      - ./front:/usr/src/app
+    ports:
+      - "8081:8080"
+    restart: always

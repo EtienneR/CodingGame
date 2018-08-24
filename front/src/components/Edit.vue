@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import { etats } from '@/services/Api'
+
 export default {
 	name: 'Edit',
 	props: {
@@ -102,7 +104,7 @@ export default {
 	data () {
 		return {
 			animaux: ['Chien', 'Chat', 'Lapin', 'Perroquet'],
-			etats: ['Très faible', 'Faible', 'Moyen', 'Bon']
+			etats: etats
 		}
 	},
 

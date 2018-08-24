@@ -44,11 +44,8 @@
                             <article class="tile is-child box">
                                 <p class="title">Les etats</p>
                                 <p class="subtitle">Les catégories possibles</p>
-                                <ul>
-                                    <li>Très faible</li>
-                                    <li>Faible</li>
-                                    <li>Moyen</li>
-                                    <li>Bon</li>
+                                <ul v-for="(etat, index) in etats" :key="index">
+                                    <li>{{ etat }}</li>
                                 </ul>
                             </article>
                         </div>
@@ -133,6 +130,7 @@
 </template>
 
 <script>
+import { etats } from '@/services/Api'
 import { brigades } from '@/services/Api'
 
 export default {
@@ -141,6 +139,7 @@ export default {
 	},
 	data () {
 		return {
+            etats: etats,
 			statuts: [
                 { 
                     name: 'Signalé',

@@ -126,7 +126,6 @@ export default {
 	},
 	data () {
 		return {
-			etats: ['Très faible', 'Faible', 'Moyen', 'Bon'],
 			statuts: ['Assigné', 'Sauvé', 'Echec'],
 			brigades: brigades,
 			checkedRows: []

@@ -114,15 +114,11 @@
 <script>
 import moment from 'moment'
 import { brigades } from '@/services/Api'
-import Edit from '@/components/Edit.vue'
 
 export default {
 	name: 'Dashboard',
 	props: {
 		signalements: Array,
-	},
-	components: {
-		Edit
 	},
 	data () {
 		return {

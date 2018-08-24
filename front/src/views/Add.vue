@@ -3,11 +3,8 @@
 
         <section class="hero">
             <div class="hero-body has-text-centered">
-                <h1 class="title is-1" v-if="$route.params.id">
-                    Modifier ce signalement
-                </h1>
-                <h1 class="title is-1" v-else>
-                    Ajouter un signalement
+                <h1 class="title is-1">
+                    {{ title }}
                 </h1>
                 <h2 class="subtitle" v-if="!$route.params.id">
                     Afin de permettre à nos equipes de se mobiliser.
@@ -36,6 +33,11 @@ import FormSignalement from '@/components/FormSignalement.vue'
 import Map from '@/components/Map.vue'
 
 export default {
+	metaInfo() {
+        return {
+		    title: this.title
+        }
+	},
 	name: 'Add',
 	components: {
 		FormSignalement,
@@ -43,6 +45,7 @@ export default {
 	},
 	data () {
 		return {
+            title: this.$route.params.id ? 'Modifier un signalement' : 'Ajouter un signalement',
             signalement: {
                 creneauDebut: '',
                 creneauFin: '',

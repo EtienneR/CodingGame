@@ -134,6 +134,9 @@
 
 <script>
 export default {
+	metaInfo: {
+		title: 'A propos',
+	},
 	data () {
 		return {
 			statuts: [

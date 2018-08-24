@@ -22,6 +22,9 @@ import Dashboard from '@/components/Dashboard.vue'
 import api from '@/services/Api'
 
 export default {
+	metaInfo: {
+		title: 'Tableau des signalements',
+	},
 	name: 'home',
 		components: {
 		Dashboard

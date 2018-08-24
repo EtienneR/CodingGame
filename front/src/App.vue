@@ -31,6 +31,9 @@
 import { EventBus } from '@/event-bus.js'
 
 export default {
+    metaInfo: {
+		titleTemplate: '%s - Coding Game'
+    },
 	data() {
 		return {
 			active: false,

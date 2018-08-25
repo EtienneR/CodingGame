@@ -63,7 +63,7 @@
                 </b-table-column>
 
 				<b-table-column field="statut" label="Statut" sortable>
-					<b-select v-if="props.row.brigade && props.row.statut === 'Signalé' || props.row.statut === 'Assigné' " v-model="props.row.statut">
+					<b-select @input="assignStatut(props.row)" v-if="props.row.brigade && props.row.statut === 'Signalé' || props.row.statut === 'Assigné' " v-model="props.row.statut">
 						<option
 							v-for="(statut, index) in statuts"
 							:value="statut"
@@ -76,7 +76,7 @@
 
 				<b-table-column field="brigade" label="Brigade" sortable>
 					<span v-if="props.row.statut !== 'Annulé'">
-						<b-select v-if="!props.row.brigade" v-model="props.row.brigade" @input="assign(props.row.id)">
+						<b-select v-if="!props.row.brigade" v-model="props.row.brigade" @input="assign(props.row)">
 							<option
 								v-for="(brigade, index) in brigades"
 								:value="brigade"
@@ -113,6 +113,7 @@
 
 <script>
 import moment from 'moment'
+import api from '@/services/Api'
 import { brigades } from '@/services/Api'
 
 export default {
@@ -131,17 +132,24 @@ export default {
 		select(id) {
 			this.$router.push({ name: 'edit', params: { id: id }})
 		},
-		assign(id) {
-			this.signalements.filter(s => {
-				if (s.id == id) {
-					s.statut = 'Assigné'
-				}
+		assign(s) {
+			return api.updateSignalement(s._id, { 
+				brigade: s.brigade,
+				statut: 'Assigné'
+			})
+			.then(() => {
+				this.signalements.filter(a => {
+					if (a._id == s._id) {
+						a.statut = 'Assigné'
+					}
+				})
 			})
 		},
+		assignStatut: (s)  =>  api.updateSignalement(s._id, { statut: s.statut }),
 		cancelSignalement() {
 			const self = this
 			this.signalements.filter(s => {
-				for(let i = 0; i < self.checkedRows.length; i++) {
+				for (let i = 0; i < self.checkedRows.length; i++) {
 					if (s.id == self.checkedRows[i].id) {
 						s.statut = 'Annulé'
 						s.brigade = ''

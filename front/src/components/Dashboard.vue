@@ -149,11 +149,17 @@ export default {
 		assignStatut: (s) => api.updateSignalement(s._id, { statut: s.statut }),
 		cancelSignalement() {
 			const self = this
+			const brigade = ''
+			const statut = 'Annulé'
 			this.signalements.filter(s => {
 				for (let i = 0; i < self.checkedRows.length; i++) {
 					if (s._id == self.checkedRows[i]._id) {
-						s.statut = 'Annulé'
-						s.brigade = ''
+						api.updateSignalement(s._id, {
+							brigade: brigade,
+							statut: statut
+						})
+						s.brigade = brigade
+						s.statut = statut
 					}
 				}
 			})

@@ -15,9 +15,7 @@
 			checkable>
 			<template slot-scope="props">
 				<b-table-column field="date" label="Date" sortable>
-					<span class="tag is-success">
-						{{ props.row.date | moment }}
-					</span>
+					<DisplayDate :date="props.row.created_at | moment" />
                 </b-table-column>
 
 				<b-table-column label="Créneau">
@@ -110,11 +108,13 @@ import moment from 'moment'
 import api from '@/services/Api'
 import { brigades } from '@/services/Api'
 import ConfirmChange from '@/components/ConfirmChange.vue'
+import DisplayDate from '@/components/DisplayDate.vue'
 
 export default {
 	name: 'Dashboard',
 	components: {
-		ConfirmChange
+		ConfirmChange,
+		DisplayDate
 	},
 	props: {
 		signalements: Array,

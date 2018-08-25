@@ -12,6 +12,7 @@
                 <h2 class="subitle" v-else>
                     <div class="level">
                         <div class="level-item tags">
+                            <DisplayDate :date="signalement.created_at | moment" />
                             <span class="tag is-medium" :class="statutColor">{{ signalement.statut }}</span> 
                             <span v-if="signalement.brigade" class="tag is-medium is-black">{{ signalement.brigade }}</span>
                         </div>
@@ -29,10 +30,13 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import api from '@/services/Api'
 import { EventBus } from '@/event-bus.js'
 import FormSignalement from '@/components/FormSignalement.vue'
 import Map from '@/components/Map.vue'
+import DisplayDate from '@/components/DisplayDate.vue'
 
 export default {
     metaInfo() {
@@ -43,7 +47,8 @@ export default {
 	name: 'Add',
 	components: {
 		FormSignalement,
-        Map
+        Map,
+        DisplayDate
 	},
 	data () {
 		return {
@@ -130,6 +135,11 @@ export default {
         redirect() {
             return this.$root.$router.push({ name: 'home' })
         }
-    }
+    },
+	filters: {
+		moment: function (date) {
+			return moment(date).format('DD/MM/YY')
+		},
+	}
 }
 </script>

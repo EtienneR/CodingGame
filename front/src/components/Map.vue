@@ -1,6 +1,11 @@
 <template>
     <div class="container">
-        <l-map v-if="!this.loading" ref="map" :zoom="zoom" :center="marker" style="width: 100%; height: 480px;">
+        <l-map
+            v-if="!this.loading"
+            ref="map"
+            :zoom="zoom"
+            :center="marker" 
+            id="map">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker :lat-lng="marker">
                 <l-popup>{{ signalement.voie }} <br/> {{ signalement.cp }} - {{ signalement.ville }}</l-popup>
@@ -44,3 +49,11 @@ export default {
     }
 }
 </script>
+
+<style>
+#map {
+    margin-top: 20px;
+    width: 100%;
+    height: 480px;
+}
+</style>

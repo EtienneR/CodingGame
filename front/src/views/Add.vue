@@ -22,7 +22,8 @@
 
         <FormSignalement :signalement="signalement" @save="save" />
 
-        <Map :signalement="signalement" v-if="this.$route.params.id" />
+        <Map v-if="this.$route.params.id && Object.keys(signalement.coordonnees.lat).length > 0" 
+            :signalement="signalement" />
 
     </div>
 </template>

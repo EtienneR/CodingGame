@@ -26,7 +26,7 @@ export default {
 		title: 'Tableau des signalements',
 	},
 	name: 'home',
-		components: {
+	components: {
 		Dashboard
 	},
 	data () {

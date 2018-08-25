@@ -10,6 +10,7 @@ services:
     ports:
       - "27017:27017"
     restart: always
+
   api:
     build: ./api
     command: sh -c 'node_modules/.bin/nodemon'

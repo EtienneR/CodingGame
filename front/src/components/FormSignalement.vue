@@ -106,16 +106,13 @@
             </div>
         </div>
 
-        <button class="button is-primary" @click="save">Sauvegarder</button>
+        <button class="button is-primary" @click="doSomething">Sauvegarder</button>
     </div>
 </template>
 
 <script>
-import api from '@/services/Api'
 import { animaux } from '@/services/Api'
 import { etats } from '@/services/Api'
-import axios from 'axios'
-import { EventBus } from '@/event-bus.js'
 
 export default {
 	name: 'FormSignalement',
@@ -140,30 +137,8 @@ export default {
         }
 	},
     methods: {
-        save() {   
-            const url = encodeURI(`https://nominatim.openstreetmap.org/search?format=json&street=${this.signalement.voie}&city=${this.signalement.ville}&postalcode=${this.signalement.cp}&limit=1`)
-            axios.get(url)
-                .then(res => {
-                    if (res.data[0]) {
-                        this.signalement.coordonnees.lat = res.data[0].lat
-                        this.signalement.coordonnees.lon = res.data[0].lon
-                    }
-                
-                    if (this.$route.params.id) {
-                        return api.updateSignalement(this.$route.params.id, this.computedSignalement)
-                        .then((res) => {
-                            console.log(res.data)
-                            EventBus.$emit('toast', 'Signalement modifié')
-                            this.redirect()
-                        })
-                    } else {
-                        return api.addSignalement(this.computedSignalement)
-                        .then(() => {
-                            EventBus.$emit('toast', 'Signalement ajouté, merci pour votre coopération. Nous vous tiendrons informer de l évolution par courriel.')
-                            this.redirect()
-                        })
-                    }
-            })
+        doSomething() {
+            this.$emit('save', this.signalement)
         },
         redirect() {
             return this.$root.$router.push({ name: 'home' })

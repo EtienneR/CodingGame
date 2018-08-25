@@ -19,8 +19,9 @@
                 </h2>
             </div>
         </section>
+        <strong>{{signalement}}</strong>
 
-        <FormSignalement :signalement="signalement" />
+        <FormSignalement :signalement="signalement" @save="save" />
 
         <Map :signalement="signalement" v-if="this.$route.params.id" />
 
@@ -28,7 +29,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 import api from '@/services/Api'
+import { EventBus } from '@/event-bus.js'
 import FormSignalement from '@/components/FormSignalement.vue'
 import Map from '@/components/Map.vue'
 
@@ -101,6 +104,33 @@ export default {
                     console.err(err)
                 }
             })
+        },
+        save (signalement) {
+            const url = encodeURI(`https://nominatim.openstreetmap.org/search?format=json&street=${signalement.voie}&city=${signalement.ville}&postalcode=${signalement.cp}&limit=1`)
+            axios.get(url)
+                .then(res => {
+                    if (res.data[0]) {
+                        signalement.coordonnees.lat = res.data[0].lat
+                        signalement.coordonnees.lon = res.data[0].lon
+                    }
+                    if (this.$route.params.id) {
+                        return api.updateSignalement(this.$route.params.id, signalement)
+                        .then((res) => {
+                            console.log(res.data)
+                            EventBus.$emit('toast', 'Signalement modifié')
+                            this.redirect()
+                        })
+                    } else {
+                        return api.addSignalement(signalement)
+                        .then(() => {
+                            EventBus.$emit('toast', 'Signalement ajouté, merci pour votre coopération. Nous vous tiendrons informer de l évolution par courriel.')
+                            this.redirect()
+                        })
+                    }
+            })
+        },
+        redirect() {
+            return this.$root.$router.push({ name: 'home' })
         }
     }
 }

@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const signalementSchema = mongoose.Schema({
-    date: {
-        type: Date,
-        default: Date.now()
-    },
     creneauDebut: {
         type: String
     },
@@ -47,6 +43,9 @@ const signalementSchema = mongoose.Schema({
         type: String,
         default: ''
     }
+},
+{
+    timestamps: {}
 })
 
 module.exports = mongoose.model('signalements', signalementSchema);

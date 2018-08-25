@@ -20,7 +20,7 @@
                         <div class="tile is-parent">
                             <article class="tile is-child box">
                                 <p class="title">Pourquoi avoir créé cette application ?</p>
-                                <p>Dans le but de faire un Coding Game pour la startup HelloZack sur une durée courte de 3 jours</p>
+                                <p>Dans le but de faire un Coding Game pour la startup HelloZack sur une durée courte de 4 jours</p>
                             </article>
                         </div>
                     </div>
@@ -113,6 +113,7 @@
                                     <li>VueRouter</li>
                                     <li>Axios</li>
                                     <li>Buefy</li>
+                                    <li>Leaflet</li>
                                     <li>Moment</li>
                                 </ul>
                             </article>

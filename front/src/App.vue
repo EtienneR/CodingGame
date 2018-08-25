@@ -16,7 +16,7 @@
 			<div class="navbar-menu" :class="{ 'is-active': active }">
 				<div class="navbar-start">
 					<router-link to="/" class="navbar-item">Dashboard</router-link> 
-					<router-link to="/ajouter" class="navbar-item">Ajouter un signalement</router-link>
+					<router-link :to="{ name: 'add'}" class="navbar-item">Ajouter un signalement</router-link>
 				</div>
 				<div class="navbar-end">
 					<router-link to="/about" class="navbar-item">A propos</router-link> 

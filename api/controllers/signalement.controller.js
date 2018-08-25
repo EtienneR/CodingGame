@@ -1,4 +1,4 @@
-const Signalement = require('../models/signalement.model.js');
+const Signalement = require('../models/signalement.model.js')
 
 // Enregistrer un nouveau signalement
 exports.create = (req, res) => {
@@ -15,7 +15,7 @@ exports.create = (req, res) => {
         res.json(data)
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the Note."
+            message: err.message || "Some error occurred while creating the signalement."
         })
     })
 }
@@ -42,7 +42,7 @@ exports.findOne = (req, res) => {
                 message: "Signalement not found with id " + req.params.id
             })
         }
-        res.json(signalement);
+        res.json(signalement)
     }).catch(err => {
         if (err.kind === 'ObjectId') {
             return res.status(404).json({
@@ -65,41 +65,14 @@ exports.update = (req, res) => {
 
     Signalement.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then(signalement => {
-        if(!signalement) {
+        if (!signalement) {
             return res.status(404).json({
                 message: "Signalement not found with id " + req.params.id
             })
         }
         res.json(signalement)
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).json({
-                message: "Signalement not found with id " + req.params.id
-            })
-        }
-        return res.status(500).json({
-            message: "Error updating signalement with id " + req.params.id
-        })
-    })
-}
-
-exports.updateBrigade = (req, res) => {
-    if (!req.body) {
-        return res.status(400).json({
-            message: "Signalement content can not be empty"
-        })
-    }
-
-    Signalement.findByIdAndUpdate(req.params.id, { brigade: req.body.brigade }, { new: true })
-    .then(signalement => {
-        if(!signalement) {
-            return res.status(404).json({
-                message: "Signalement not found with id " + req.params.id
-            })
-        }
-        res.json(signalement)
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
+        if (err.kind === 'ObjectId') {
             return res.status(404).json({
                 message: "Signalement not found with id " + req.params.id
             })
@@ -112,18 +85,20 @@ exports.updateBrigade = (req, res) => {
 
 // Supprimer un signalement
 exports.delete = (req, res) => {
+    console.log(req.params.id)
     Signalement.findByIdAndRemove(req.params.id)
     .then(signalement => {
+        console.log('signalement', signalement)
         if (!signalement) {
             return res.status(404).json({
                 message: "Signalement not found with id " + req.params.id
             })
         }
-        res.json({message: "Signalement deleted successfully!"});
+        res.json({message: "Signalement deleted successfully!"})
     }).catch(err => {
         if (err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).json({
-                message: "Signalement not found with id " + req.params.id
+                message: "Signalement not found with objectid " + req.params.id
             })
         }
         return res.status(500).json({

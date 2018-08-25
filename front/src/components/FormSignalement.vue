@@ -106,8 +106,7 @@
             </div>
         </div>
 
-        <button class="button is-primary" @click="save">{{ currentSave }}</button>
-
+        <button class="button is-primary" @click="save">Sauvegarder</button>
     </div>
 </template>
 
@@ -124,13 +123,15 @@ export default {
 		signalement: Object
 	},
 	computed: {
-		currentSave() {
-			if (this.$route.params.id) {
-				return 'Modifier'
-			} else {
-				return 'Ajouter'
-			}
-		}
+        computedSignalement: {
+            get() {
+                return this.signalement;
+            },
+            set() {
+                return this.signalement;
+            }
+        } 
+		//currentSave: () => this.$route.params.id ? 'Modifier' : 'Ajouter'
 	},
 	data () {
 		return {
@@ -139,32 +140,34 @@ export default {
         }
 	},
     methods: {
-        save() {
-            this.getGeo()
-            if (this.$route.params.id) {
-                return api.updateSignalement(this.$route.params.id, this.signalement)
-                .then(() => {
-                    EventBus.$emit('toast', 'Signalement modifié')
-                    this.$root.$router.push({ name: 'home' })
-                })
-            } else {
-                return api.addSignalement(this.signalement)
-                .then(() => {
-                    //EventBus.$emit('toast', 'Signalement ajouté, merci pour votre coopération. Nous vous tiendrons informer de l évolution par courriel.')
-                    this.$root.$router.push({ name: 'home' })
-                })
-            }
-        },
-        getGeo() {
+        save() {   
             const url = encodeURI(`https://nominatim.openstreetmap.org/search?format=json&street=${this.signalement.voie}&city=${this.signalement.ville}&postalcode=${this.signalement.cp}&limit=1`)
             axios.get(url)
-            .then(res => {
-                if (res.data[0]) {
-                    this.signalement.coordonnees[0] = res.data[0].lat
-                    this.signalement.coordonnees[1] = res.data[0].lon
-                }
-			})
+                .then(res => {
+                    if (res.data[0]) {
+                        this.signalement.coordonnees.lat = res.data[0].lat
+                        this.signalement.coordonnees.lon = res.data[0].lon
+                    }
+                
+                    if (this.$route.params.id) {
+                        return api.updateSignalement(this.$route.params.id, this.computedSignalement)
+                        .then((res) => {
+                            console.log(res.data)
+                            EventBus.$emit('toast', 'Signalement modifié')
+                            this.redirect()
+                        })
+                    } else {
+                        return api.addSignalement(this.computedSignalement)
+                        .then(() => {
+                            EventBus.$emit('toast', 'Signalement ajouté, merci pour votre coopération. Nous vous tiendrons informer de l évolution par courriel.')
+                            this.redirect()
+                        })
+                    }
+            })
         },
+        redirect() {
+            return this.$root.$router.push({ name: 'home' })
+        }
     }
 }
 </script>

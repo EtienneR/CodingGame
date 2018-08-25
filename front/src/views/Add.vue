@@ -22,7 +22,7 @@
 
         <FormSignalement :signalement="signalement" />
 
-        <Map :signalement="signalement" v-if="this.$route.params.id"/>
+        <Map :signalement="signalement" v-if="this.$route.params.id" />
 
     </div>
 </template>
@@ -33,11 +33,11 @@ import FormSignalement from '@/components/FormSignalement.vue'
 import Map from '@/components/Map.vue'
 
 export default {
-	metaInfo() {
+    metaInfo() {
         return {
-		    title: this.title
+            title: this.title
         }
-	},
+    },
 	name: 'Add',
 	components: {
 		FormSignalement,
@@ -57,8 +57,12 @@ export default {
                 ville: '',
                 etat: '',
                 collier: Boolean,
-                coordonnees: [],
-                statut: 'Signalé'
+                coordonnees: {
+                    lat: '',
+                    lon: '',
+                },
+                statut: 'Signalé',
+                brigade: ''
             },
         }
     },

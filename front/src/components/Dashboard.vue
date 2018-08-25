@@ -24,6 +24,7 @@
 			@click="isCardModalActive = true"
 			:striped="true"
 			:checked-rows.sync="checkedRows"
+			:is-row-checkable="(row) => row.statut === 'Signalé' || row.statut === 'Assigné'"
 			checkable>
 			<template slot-scope="props">
 				<b-table-column field="date" label="Date" sortable>
@@ -133,7 +134,7 @@ export default {
 			this.$router.push({ name: 'edit', params: { id: id }})
 		},
 		assign(s) {
-			return api.updateSignalement(s._id, { 
+			return api.updateSignalement(s._id, {
 				brigade: s.brigade,
 				statut: 'Assigné'
 			})
@@ -145,12 +146,12 @@ export default {
 				})
 			})
 		},
-		assignStatut: (s)  =>  api.updateSignalement(s._id, { statut: s.statut }),
+		assignStatut: (s) => api.updateSignalement(s._id, { statut: s.statut }),
 		cancelSignalement() {
 			const self = this
 			this.signalements.filter(s => {
 				for (let i = 0; i < self.checkedRows.length; i++) {
-					if (s.id == self.checkedRows[i].id) {
+					if (s._id == self.checkedRows[i]._id) {
 						s.statut = 'Annulé'
 						s.brigade = ''
 					}

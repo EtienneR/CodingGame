@@ -17,4 +17,8 @@ export default {
     updateSignalement(id, content) {
         return axios.put(`${API_URL}/signalements/${id}`, content)
     },
+    getLocation(voie, ville, cp) {
+        const url = encodeURI(`https://nominatim.openstreetmap.org/search?format=json&street=${voie}&city=${ville}&postalcode=${cp}&limit=1`)
+        return axios.get(url)
+    }
 }

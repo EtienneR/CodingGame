@@ -19,7 +19,6 @@
                 </h2>
             </div>
         </section>
-        <strong>{{signalement}}</strong>
 
         <FormSignalement :signalement="signalement" @save="save" />
 
@@ -29,7 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import api from '@/services/Api'
 import { EventBus } from '@/event-bus.js'
 import FormSignalement from '@/components/FormSignalement.vue'
@@ -106,8 +104,7 @@ export default {
             })
         },
         save (signalement) {
-            const url = encodeURI(`https://nominatim.openstreetmap.org/search?format=json&street=${signalement.voie}&city=${signalement.ville}&postalcode=${signalement.cp}&limit=1`)
-            axios.get(url)
+            return api.getLocation(signalement.voie, signalement.ville, signalement.cp)
                 .then(res => {
                     if (res.data[0]) {
                         signalement.coordonnees.lat = res.data[0].lat

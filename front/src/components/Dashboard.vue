@@ -1,23 +1,10 @@
 <template>
 	<div>
 
-		<span v-if="checkedRows.length > 0">
-			Annuler ces {{ checkedRows.length }} signalements ?
-				<b-field>
-					<b-radio-button
-						@click.native="cancelSignalement"
-                        type="is-primary">
-                        <b-icon icon="check"></b-icon>
-                        <span>Oui</span>
-                    </b-radio-button>
-                    <b-radio-button 
-                        @click.native="cancel"
-                        type="is-danger">
-                        <b-icon icon="close"></b-icon>
-                        <span>Non</span>
-                    </b-radio-button>
-				</b-field>
-		</span>
+		<ConfirmChange
+			:checkedRows="checkedRows"
+			@cancelSignalement="cancelSignalement"
+			@cancel="cancel" />
 
 		<b-table
 			:data="signalements"
@@ -109,16 +96,26 @@
             </template>
 		</b-table>
 
+		<ConfirmChange
+			:checkedRows="checkedRows"
+			@cancelSignalement="cancelSignalement"
+			@cancel="cancel" />
+
 	</div>
 </template>
 
 <script>
 import moment from 'moment'
+
 import api from '@/services/Api'
 import { brigades } from '@/services/Api'
+import ConfirmChange from '@/components/ConfirmChange.vue'
 
 export default {
 	name: 'Dashboard',
+	components: {
+		ConfirmChange
+	},
 	props: {
 		signalements: Array,
 	},
